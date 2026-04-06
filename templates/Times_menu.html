@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            justify-content: center;
+            justify-items: center;
+        }
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }   
+        ul{
+            list-style: none;
+            padding-left: 0px;
+            
+        }
+        li{
+            padding-left: 0px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Times menu</h1>
+    <ul>
+        <li><a href="{{ url_for('menu') }}">Back to menu</a></li>
+        <li><a href="{{ url_for('presente_forward') }}">El presente
+            <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        {% if presente_prog > 0 and not presente_prog > 100 %}
+                            <div style="height: 3px; width: {{presente_prog }}%; background-color: #7effa7; border-radius: 5px;"></div>
+                        {% elif presente_prog <= 0 and not presente_prog < -100 %}
+                            <div style="height: 3px; width: {{presente_prog|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+        </a></li>
+    </ul>
+</body>
+</html>

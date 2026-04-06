@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #c3c3c3;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            box-sizing: border-box;
+            justify-content: center;
+            justify-items: center;
+            color: #eaeaea;
+            margin: 0px 0px 0px 0px;
+            padding: 0px 0px 0px 0px;
+        }
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color:  #0056b3;
+        }
+        .displayer{
+            width:100%;
+            margin:0px 0 0 0;
+            background-color: rgba(0, 0, 0, 0);
+            padding: 150px 0px 20px 0px;
+            justify-content: center;
+            justify-items: center;
+        }
+        h1{
+            margin: 0px;
+        }
+        p{
+            margin: 0px;
+            color: #e4e4e4;
+        }
+        a.back{
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 10px;  
+            float: left;
+            background-color: #5c5c5c41;
+        }
+        .text{
+            width: fit-content;
+            height: fit-content;
+            position: relative;
+            margin-bottom: auto;      
+            margin-top: 0px;  
+        }
+        hr{
+            width: 180px;
+        }
+        .card_button{
+            width: 100%;
+            position: relative;
+            margin-top: auto;
+        }
+        .text_wrapper{
+            width: 100%;
+            height: fit-content;
+            
+            justify-content: center;
+            justify-items: center;
+        }
+        h4{
+            padding: 0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
+            color: #cacaca;
+        }
+        .easy_a{
+            background-color: rgb(145, 232, 137);
+        }
+        .hard_a{
+            background-color:rgb(229, 133, 116);
+        }
+        .easy_a:hover{
+            background-color: rgb(135, 222, 127);
+        }
+        .hard_a:hover{
+            background-color:rgb(219, 123, 106);
+        }
+        a.back:hover{
+            background-color: #08080841;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;padding: 0 0 0 0;">
+        <a class="back" href="{{ url_for('vocabs') }}">Back</a>
+    </div>
+    <div class="displayer"> 
+        
+        <div class="text_wrapper">
+            {% if back == 'False' %}
+                <div class="text" style="margin-top: 0px;">
+                    <h1>{{front_side}}</h1>
+                    
+                </div>
+
+                <div class="card_button">
+                    <hr>
+                    {% if set == 'most_common' %}
+                        <a href="{{ url_for('words', set='most_common', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    {% elif set == 'confusing_similarities' %}
+                        <a href="{{ url_for('words', set='confusing_similarities', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    {% else %}
+                        <p>set error</p>
+
+                    {% endif %}
+                </div>
+            {% elif back == 'True' %}
+                <div class="text" style="margin-top: -18.4px;  ">  
+                    <h4>{{front_side}}</h4>
+                    <h1>{{backside}}</h1>
+                    
+                </div>
+                    
+                <div class="card_button">
+                    <hr>
+                    {% if set == 'most_common' %}
+                        <a href="{{ url_for('words', set='most_common', back='False', word_id=word_id,easy='True',was_front=front_side,was_back=backside) }}" 
+                        class="easy_a">easy</a>
+                        <a href="{{ url_for('words', set='most_common', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
+                        class="hard_a">hard</a>
+                    {% elif set == 'confusing_similarities' %}
+                        <a href="{{ url_for('words', set='confusing_similarities', back='False', word_id=word_id,easy='True',was_front=front_side,was_back=backside) }}" 
+                        class="easy_a">easy</a>
+                        <a href="{{ url_for('words', set='confusing_similarities', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
+                        class="hard_a">hard</a>
+                    {% else %}
+                        <p>set_error</p>
+                    
+                    {% endif %}
+                </div>
+            {% else %}
+                <p>not working</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

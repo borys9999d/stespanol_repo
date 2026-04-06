@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #c3c3c3;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            box-sizing: border-box;
+            justify-content: center;
+            justify-items: center;
+            color: #eaeaea;
+            margin: 0px 0px 0px 0px;
+            padding: 0px 0px 0px 0px;
+        }
+        
+        .displayer{
+            width:100%;
+            margin:0px 0 0 0;
+            background-color: rgba(0, 0, 0, 0);
+            padding: 100px 0px 20px 0px;
+            justify-content: center;
+            justify-items: center;
+        }
+        
+        a, button {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border:0px
+        }
+        a:hover {
+            background-color:  #c0c0c0;
+        }
+        a.back{
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 10px;  
+            float: left;
+            background-color: #5c5c5c41;
+        }
+        a.back:hover{
+            background-color: #08080841;
+        }
+        .certain_example{
+            width: fit-content;
+            gap:0px;
+            text-align: right;
+            position: relative;
+            display:inline-block;
+            background-color: transparent;
+        }
+        .text{
+            width: fit-content;
+            height: fit-content;
+            position: relative;
+            display:inline-block;
+        }
+        select{
+            display: inline-block;
+            padding: 3px 80px 3px 0px;
+            border:0px;
+            background-color: #c0c0c0;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            
+        }
+        option{
+            padding: 3px 80px 3px 0px;
+            border:0px;
+            
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        
+        }
+        option:focus,
+        option:hover,
+        option:checked{
+            outline: none;
+            box-shadow: none; 
+            border:0px;
+        }
+        
+        ul{
+            
+            list-style: none;
+            padding-left: 0px;
+        }
+        select:focus{
+            outline: none;
+            box-shadow: none; 
+            border:0px;
+        }
+        
+        select:hover{
+            background-color: #acacac;
+        }
+        .kontext{
+            width: 100px;
+            height: fit-content;
+            position: relative;
+            display:inline-block;
+            margin-right: 10px;
+            padding-right: 0px;
+            text-align: right;
+        }
+        hr{
+            width: 180px;
+        }
+        h1{
+            margin: 0px;
+        }
+        h4{
+            padding: 0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
+            color: #dedede;
+        }
+        form{
+            display:inline;
+        }
+        button:hover{
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div style="width: 100%;padding: 0 0 0 0;">
+        <a class="back" href="{{ url_for('times') }}">Back</a>
+    </div>
+    <div class="displayer">
+        <h1>El presente</h1>
+        <h4>Verb: {{verb}}</h4>
+        <form method="post" action="{{ url_for('presente_forward') }}">
+        <ul>
+            
+                
+                {% for i, j,k in zip(chosen_ends,right_ends,kontexts) %}
+                    <li>
+                    <div class="certian_example"> 
+                    <p class="kontext">{{k}}</p> <p class="text">{{const}}</p>
+                        {% if i== j %}
+                            <select style="background-color:rgb(145, 232, 137);">
+                            <option disabled selected hidden >{{i}}</option>
+                            
+                            </select>
+
+                        {% elif i != j %}
+                            <select style="background-color: rgb(229, 133, 116);">
+                            <option disabled selected hidden >{{i}}</option>
+                            
+                            </select>
+                        {% else %}
+
+                        {% endif %}
+                    </div>
+
+                    
+
+                    
+                    </li>
+                {% endfor %}
+                <form action="{{url_for('presente_forward')}}" method="post">
+                        <div class="certain_example">
+                            <button type="submit">Next verb</button>
+                        </div>
+                    </form>
+            
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            justify-content: center;
+            justify-items: center;
+        }
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+        ul{
+            list-style: none;
+            padding-left: 0px;
+            
+        }
+        li{
+            padding-left: 0px;
+        }
+    </style>
+</head>
+<body>
+    
+        <h1>Menu</h1>
+        <ul style="list-style: none;">
+            <li><a href="{{ url_for('vocabs') }}">Vocabulary flashcards</a></li>
+            <li><a href="{{ url_for('times') }}">Times</a></li>
+        </ul>
+</body>
+</html>
