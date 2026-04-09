@@ -302,8 +302,8 @@ def presente_backward():
 if __name__ == "__main__":
     # 1. Get the port from the environment variable (Render sets this automatically)
     # 2. Default to 10000 if PORT isn't found (local testing)
-    # port = int(os.environ.get("PORT", 10000))
+    port = int(os.environ.get("PORT", 10000))
     
     # host='0.0.0.0' tells Flask to listen on all public IPs
-    #app.run(host='0.0.0.0', port=port)
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=port)
+   
