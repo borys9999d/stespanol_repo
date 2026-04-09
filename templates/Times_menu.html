@@ -50,6 +50,17 @@
                         {% endif %}
                 </div>
         </a></li>
+        <li><a href="{{ url_for('presente_iregular_forward') }}">El presente backward
+            <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        {% if presente_iregular_prog > 0 and not presente_iregular_prog > 100 %}
+                            <div style="height: 3px; width: {{presente_iregular_prog }}%; background-color: #7effa7; border-radius: 5px;"></div>
+                        {% elif presente_iregular_prog <= 0 and not presente_iregular_prog < -100 %}
+                            <div style="height: 3px; width: {{presente_iregular_prog|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+        </a></li>
     </ul>
 </body>
 </html>
