@@ -74,6 +74,19 @@ presente_iregulares = [
     ["dar","doy","das","da","damos","dais","dan"]
 ]
 
+indefinido_iregulares=[
+    ["ser","fui","fuiste","fue","fuimos","fuisteis","fueron"],
+    ["estar","estuve","estuviste","estuvo","estuvimos","estuvisteis","estuvieron"],
+    ["tener","tuve","tuviste","tuvo","tuvimos","tuvisteis","tuvieron"],
+    ["hacer","hice","hiciste","hizo","hicimos","hicisteis","hicieron"],
+    ["ir","fui","fuiste","fue","fuimos","fuisteis","fueron"],
+    ["decir","dije","dijiste","dijo","dijimos","dijisteis","dijeron"],
+    ["poder","pude","pudiste","pudo","pudimos","pudisteis","pudieron"],
+    ["ver","vi","viste","vio","vimos","visteis","vieron"],
+    ["dar","di","diste","dio","dimos","disteis","dieron"]
+]
+
+
 
 kontexts = ["yo","tú", "él|ella", "nosotr-os|as","vosotr-os|as","ell-os|as"]
 
@@ -83,6 +96,7 @@ presente_end_erir = ["o","es","e","imos","ís","en"]
 
 indefinido_end_ar = ["é","aste","ó","amos","asteis","aron"]
 indefinido_end_erir = ["í","iste","ió","imos","isteis","ieron"]
+
 
 
 @app.route('/')
@@ -128,12 +142,17 @@ def times():
     
     try:
         valI = int(request.cookies.get('presente_prog'))
+        valII = int(request.cookies.get('presente_iregular_prog'))
+        valIII = int(request.cookies.get('indefinido_prog'))
+        valIV = int(request.cookies.get('indefinido_iregular_prog'))
         
     except:
         valI = 0
-        
+        valII = 0
+        valIII = 0
+        valIV = 0
 
-    resp = make_response(render_template('Times_menu.html', presente_prog=valI))
+    resp = make_response(render_template('Times_menu.html', presente_prog=valI, presente_iregular_prog=valII, indefinido_prog=valIII, indefinido_iregular_prog=valIV))
 
     # Overwrite (replace) the cookie by setting it again with the same name
     try:
@@ -141,14 +160,34 @@ def times():
             valI = 99
         elif int(request.cookies.get('presente_prog')) < -100:
             valI = -99
+        elif int(request.cookies.get('presente_iregular_prog')) > 100:
+            valII = 99
+        elif int(request.cookies.get('presente_iregular_prog')) < -100:
+            valII = -99
+        elif int(request.cookies.get('indefinido_prog')) > 100:
+            valIII = 99
+        elif int(request.cookies.get('indefinido_prog')) < -100:
+            valIII = -99
+        elif int(request.cookies.get('indefinido_iregular_prog')) > 100:
+            valIV = 99
+        elif int(request.cookies.get('indefinido_iregular_prog')) < -100:
+            valIV = -99
+
+
 
         else:pass
-    except:valI= 0
+    except:
+        valI= 0
+        valII = 0
+        valIII = 0
+        valIV = 0
 
-    resp = make_response(render_template('Times_menu.html', presente_prog=valI\
-        ))
+    resp = make_response(render_template('Times_menu.html', presente_prog=valI,\
+        presente_iregular_prog=valII, indefinido_prog=valIII, indefinido_iregular_prog=valIV))
     resp.set_cookie('presente_prog', str(valI), max_age=60*60*24*365)
-   
+    resp.set_cookie('presente_iregular_prog', str(valII), max_age=60*60*24*365)
+    resp.set_cookie('indefinido_prog', str(valIII), max_age=60*60*24*365)
+    resp.set_cookie('indefinido_iregular_prog', str(valIV), max_age=60*60*24*365)
 
     return resp
 
@@ -259,7 +298,7 @@ def presente_forward():
         random_endingsI.append(wordI)
 
     
-    resp = make_response(render_template('el_presente_forward.html',verb=verb,const=const,endingsI=random_endingsI))
+    resp = make_response(render_template('el_presente_forward.html',verb=verb,const=const,endingsI=random_endingsI,time="presente"))
     resp.set_cookie('verb', verb, max_age=60*5)
     resp.set_cookie('const', const, max_age=60*5)
     return resp
@@ -307,7 +346,7 @@ def presente_backward():
 
     resp= make_response(render_template('el_presente_backside.html', verb=verb, const=const,
                            chosen_ends=chosen_ends, right_ends=right_ends,
-                           kontexts=kontexts, zip=zip))
+                           kontexts=kontexts, zip=zip,time="presente"))
     
 
     
@@ -319,11 +358,29 @@ def presente_backward():
 def presente_iregular_forward():
     resp = make_response(render_template('presente_iregular_forward.html'))
 
+    random_endingsI = []
+    
+    random_num = random.randint(0, len(indefinido_iregulares) - 1)
+    verb = indefinido_iregulares[random_num][0]
+    
+    
+
+    
+    random_endingsI = indefinido_iregulares[random_num][1:]
+    random_choiceI = random.randint(0,5)
+    wordI = random_endingsI[random_choiceI]
+    random_endingsI.pop(random_choiceI)
+    random_endingsI.append(wordI)
+        
+    
+
+
+
     random_num = random.randint(0, len(presente_iregulares) - 1)
     verb = presente_iregulares[random_num][0]
     
 
-    resp = make_response(render_template('presente_iregular_forward.html',verb=verb))
+    resp = make_response(render_template('presente_iregular_forward.html',verb=verb,options= random_endingsI,time="presente"))
     resp.set_cookie('verb', verb, max_age=60*60)
     return resp
 
@@ -371,9 +428,161 @@ def presente_iregular_backward():
             res += 1
         else:res-=1
 
-    resp= make_response(render_template('presente_iregular_backside.html', verb=verb, const=const,
-                           chosen_ends=chosen_ends, right_ends=right_ends, zip=zip))
+    resp= make_response(render_template('presente_iregular_backward.html', verb=verb, const="",
+                           chosen_ends=chosen_ends, right_ends=right_ends,kontexts=kontexts, zip=zip,time = "presente"))
     resp.set_cookie('presente_iregular_prog', str(res+presente_iregular_prog), max_age=60*60*24*365)
+    return resp
+
+#==============================================================================================
+#                 N O W   T H E   S A M E   W I T H   I N D E F I N I D O 
+#==============================================================================================
+
+@app.route('/indefinido_forward',methods=['POST','GET'])
+def indefinido_forward():
+    resp = make_response(render_template('presente_forward.html'))
+
+    random_endingsI = []
+    
+    random_num = random.randint(0, len(presente) - 1)
+    verb = presente[random_num][0]
+    const = presente[random_num][1]
+    
+
+    if verb.endswith("ar"):
+        random_endingsI = indefinido_end_ar
+        random_choiceI = random.randint(0,5)
+        wordI = random_endingsI[random_choiceI]
+        random_endingsI.pop(random_choiceI)
+        random_endingsI.append(wordI)
+        
+    else:
+        random_endingsI = indefinido_end_erir
+        random_choiceI = random.randint(0,5)
+        wordI = random_endingsI[random_choiceI]
+        random_endingsI.pop(random_choiceI)
+        random_endingsI.append(wordI)
+
+    
+    resp = make_response(render_template('el_presente_forward.html',verb=verb,const=const,endingsI=random_endingsI,time = "pretérito indefinido"))
+    resp.set_cookie('verb', verb, max_age=60*5)
+    resp.set_cookie('const', const, max_age=60*5)
+    return resp
+
+@app.route('/indefinido_backward', methods=['POST'])
+def indefinido_backward():
+    resp = make_response('el_presente_backside')
+    
+    chosen_ends = []
+    right_ends = []
+
+    sI = request.form.get('sI')
+    chosen_ends.append(sI)
+    sII = request.form.get('sII')
+    chosen_ends.append(sII)
+    sIII = request.form.get('sIII')
+    chosen_ends.append(sIII)
+    sIV = request.form.get('sIV')
+    chosen_ends.append(sIV)
+    sV = request.form.get('sV')
+    chosen_ends.append(sV)
+    sVI = request.form.get('sVI')
+    chosen_ends.append(sVI)
+
+    res = 0
+    # determine correct endings from the verb stored in cookies
+    verb = request.cookies.get('verb')
+    const = request.cookies.get('const')
+    try:
+        indefinido_prog = int(request.cookies.get("indefinido_prog"))
+    except:
+        indefinido_prog = 0
+
+
+    if verb and verb.endswith("ar"):
+        right_ends = indefinido_end_ar
+    else:
+        right_ends = indefinido_end_erir
+
+    
+    for i, j in zip(chosen_ends,right_ends):
+        if i == j:
+            res += 1
+        else:res-=1
+
+    resp= make_response(render_template('el_presente_backside.html', verb=verb, const=const,
+                           chosen_ends=chosen_ends, right_ends=right_ends,
+                           kontexts=kontexts, zip=zip,time = "pretérito indefinido"))
+    
+
+    
+    resp.set_cookie('indefinido_prog', str(res+indefinido_prog), max_age=60*60*24*365)
+
+    return resp
+
+@app.route('/indefinido_iregular_forward',methods=['POST','GET'])
+def indefinido_iregular_forward():
+    resp = make_response(render_template('presente_iregular_forward.html'))
+
+    random_num = random.randint(0, len(indefinido_iregulares) - 1)
+    verb = indefinido_iregulares[random_num][0]
+    
+
+    resp = make_response(render_template('presente_iregular_forward.html',verb=verb))
+    resp.set_cookie('verb', verb, max_age=60*60)
+    return resp
+
+@app.route('/indefinido_iregular_backward', methods=['POST'])
+def indefinido_iregular_backward():
+    resp = make_response('indefinido_iregular_backside')
+    
+    chosen_ends = []
+    right_ends = []
+
+    sI = request.form.get('sI')
+    chosen_ends.append(sI)
+    sII = request.form.get('sII')
+    chosen_ends.append(sII)
+    sIII = request.form.get('sIII')
+    chosen_ends.append(sIII)
+    sIV = request.form.get('sIV')
+    chosen_ends.append(sIV)
+    sV = request.form.get('sV')
+    chosen_ends.append(sV)
+    sVI = request.form.get('sVI')
+    chosen_ends.append(sVI)
+
+    res = 0
+
+    verb = request.cookies.get('verb')
+    const = request.cookies.get('const')
+    try:
+        indefinido_iregular_prog = int(request.cookies.get("indefinido_iregular_prog"))
+    except:
+        indefinido_iregular_prog = 0
+
+    q = 0
+    for i in indefinido_iregulares:
+        if i[0] == verb:
+            right_ends = i[1:]
+            break
+        else:q+=1
+    
+    
+
+
+    for i, j in zip(chosen_ends,right_ends):
+        if i == j:
+            res += 1
+        else:res-=1
+
+    resp= make_response(render_template('presente_iregular_backward.html', verb=verb, const=const,
+                           chosen_ends=chosen_ends, right_ends=right_ends, zip=zip, time = "pretérito indefinido"))
+    resp.set_cookie('indefinido_iregular_prog', str(res+indefinido_iregular_prog), max_age=60*60*24*365)
+
+
+
+
+
 
 
 if __name__ == "__main__":

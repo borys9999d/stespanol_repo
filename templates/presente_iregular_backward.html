@@ -191,7 +191,20 @@
                 {% endif %}
 
 
+
+            {% elif time == "presente" %}
+                <form action="{{url_for('indefinido_iregular_backward')}}" method="post">
+                        <div class="certain_example">
+                            <button type="submit">Next verb</button>
+                        </div>
+                    </form>
+            {% endif %}
         </ul>
+
+        
+        
+    
+        </form>
     </div>
 </body>
 </html>

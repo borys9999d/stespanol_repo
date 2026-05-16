@@ -139,11 +139,11 @@
         <a class="back" href="{{ url_for('times') }}">Back</a>
     </div>
     <div class="displayer">
-        <h1>Verbos iregulares ({{konjugation}})</h1>
+        <h1>Verbos iregulares {{time}}</h1>
         <h4>Verb: {{verb}}</h4>
-        {% if konjugation == "presente" %}
+        {% if time == "presente" %}
         <form method="post" action="{{ url_for('presente_iregular_backward') }}">
-        {% elif konjugation == "pretérito indefinido" %}
+        {% elif time == "pretérito indefinido" %}
         <form method="post" action="{{ url_for('indefinido_iregular_backward') }}">
         {% endif %}
         
@@ -227,13 +227,13 @@
 
                     
                     
-            {% if konjugation == "presente" %}
+            {% if time == "presente" %}
                 <form action="{{url_for('presente_iregular_backward')}}" method="post">
                         <div class="certain_example">
                             <button type="submit">Next verb</button>
                         </div>
                     </form>
-            {% elif konjugation == "pretérito indefinido" %}
+            {% elif time == "pretérito indefinido" %}
                 <form action="{{url_for('indefinido_iregular_backward')}}" method="post">
                         <div class="certain_example">
                             <button type="submit">Next verb</button>

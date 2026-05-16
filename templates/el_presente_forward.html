@@ -144,8 +144,11 @@
         
         {% if time == "presente" %}
             <form method="post" action="{{ url_for('presente_backward') }}">
+        
         {% elif time == "pretérito indefinido" %}
             <form method="post" action="{{ url_for('indefinido_backward') }}">
+        
+
         {% endif %}
     
         <ul>
