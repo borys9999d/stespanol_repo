@@ -97,7 +97,12 @@
 </head>
 <body>
     <div style="width: 100%;padding: 0 0 0 0;">
-        <a class="back" href="{{ url_for('vocabs') }}">Back</a>
+       
+        {% if set == "basic_numbers" or set == "further_numbers" or set == "large_numbers" %}
+            <a class="back" href="{{ url_for('numbers') }}">Back</a>
+        {% else %}
+            <a class="back" href="{{ url_for('vocabs') }}">Back</a>
+        {% endif %}
     </div>
     <div class="displayer"> 
         
@@ -114,8 +119,23 @@
                         <a href="{{ url_for('words', set='most_common', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
                     {% elif set == 'confusing_similarities' %}
                         <a href="{{ url_for('words', set='confusing_similarities', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    {% elif set == 'less_common_words' %}
+                        <a href="{{ url_for('words', set='less_common_words', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    {% elif set == 'easiest_words' %}
+                        <a href="{{ url_for('words', set='easiest_words', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    {% elif set == 'false_friends' %}
+                        <a href="{{ url_for('words', set='false_friends', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    {% elif set == 'common_objects' %}
+                        <a href="{{ url_for('words', set='common_objects', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    {% elif set == 'basic_numbers' %}
+                        <a href="{{ url_for('words', set='basic_numbers', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    {% elif set == 'further_numbers' %}
+                        <a href="{{ url_for('words', set='further_numbers', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    {% elif set == 'large_numbers' %}
+                        <a href="{{ url_for('words', set='large_numbers', back='True', word_id=word_id, easy='None',was_front=front_side,was_back=backside) }}">Flip card</a>
+                    
                     {% else %}
-                        <p>set error</p>
+                        <p>set_error</p>
 
                     {% endif %}
                 </div>
@@ -138,6 +158,59 @@
                         class="easy_a">easy</a>
                         <a href="{{ url_for('words', set='confusing_similarities', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
                         class="hard_a">hard</a>
+                    {% elif set == 'less_common_words' %}
+                        <a href="{{ url_for('words', set='less_common_words', back='False', word_id=word_id,easy='True',was_front=front_side,was_back=backside) }}" 
+                        class="easy_a">easy</a>
+                        <a href="{{ url_for('words', set='less_common_words', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
+                        class="hard_a">hard</a>
+                    {% elif set == 'easiest_words' %}
+                        <a href="{{ url_for('words', set='easiest_words', back='False', word_id=word_id,easy='True',was_front=front_side,was_back=backside) }}" 
+                        class="easy_a">easy</a>
+                        <a href="{{ url_for('words', set='easiest_words', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
+                        class="hard_a">hard</a>
+                    {% elif set == 'false_friends' %}
+                        <a href="{{ url_for('words', set='false_friends', back='False', word_id=word_id,easy='True',was_front=front_side,was_back=backside) }}" 
+                        class="easy_a">easy</a>
+                        <a href="{{ url_for('words', set='false_friends', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
+                        class="hard_a">hard</a>
+                    {% elif set == 'common_objects' %}
+                        <a href="{{ url_for('words', set='common_objects', back='False', word_id=word_id,easy='True',was_front=front_side,was_back=backside) }}" 
+                        class="easy_a">easy</a>
+                        <a href="{{ url_for('words', set='common_objects', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
+                        class="hard_a">hard</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    {% elif set == 'basic_numbers' %}
+                        <a href="{{ url_for('words', set='basic_numbers', back='False', word_id=word_id,easy='True',was_front=front_side,was_back=backside) }}" 
+                        class="easy_a">easy</a>
+                        <a href="{{ url_for('words', set='basic_numbers', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
+                        class="hard_a">hard</a>
+                    {% elif set == 'further_numbers' %}
+                        <a href="{{ url_for('words', set='further_numbers', back='False', word_id=word_id,easy='True',was_front=front_side,was_back=backside) }}" 
+                        class="easy_a">easy</a>
+                        <a href="{{ url_for('words', set='further_numbers', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
+                        class="hard_a">hard</a>
+                    {% elif set == 'large_numbers' %}
+                        <a href="{{ url_for('words', set='large_numbers', back='False', word_id=word_id,easy='True',was_front=front_side,was_back=backside) }}" 
+                        class="easy_a">easy</a>
+                        <a href="{{ url_for('words', set='large_numbers', back='False', word_id=word_id,easy='False',was_front=front_side,was_back=backside) }}"
+                        class="hard_a">hard</a>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     {% else %}
                         <p>set_error</p>
                     

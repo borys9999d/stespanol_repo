@@ -77,7 +77,7 @@
         option{
             padding: 3px 80px 3px 0px;
             border:0px;
-            
+            background-color: #c0c0c0;
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -139,55 +139,109 @@
         <a class="back" href="{{ url_for('times') }}">Back</a>
     </div>
     <div class="displayer">
-        <h1>Verbos regulares ({{time}})</h1>
+        <h1>Verbos iregulares ({{konjugation}})</h1>
         <h4>Verb: {{verb}}</h4>
-        {% if time == "presente" %}
-            <form method="post" action="{{ url_for('presente_forward') }}">
-        {% elif time == "pretérito indefinido" %}
-            <form method="post" action="{{ url_for('indefinido_forward') }}">
+        {% if konjugation == "presente" %}
+        <form method="post" action="{{ url_for('presente_iregular_backward') }}">
+        {% elif konjugation == "pretérito indefinido" %}
+        <form method="post" action="{{ url_for('indefinido_iregular_backward') }}">
         {% endif %}
-
-            <ul>
+        
+        <ul>
             
-                
-                {% for i, j,k in zip(chosen_ends,right_ends,kontexts) %}
-                    <li>
+           
+                <li>
                     <div class="certian_example"> 
-                    <p class="kontext">{{k}}</p> <p class="text">{{const}}</p>
-                        {% if i== j %}
-                            <select style="background-color:rgb(145, 232, 137);">
-                            <option disabled selected hidden >{{i}}</option>
-                            
-                            </select>
+                    <p class="kontext">yo</p>
+                        <select name="sI">
+                            <option disabled selected hidden>...</option>
+                            {% for i in options %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>    
 
-                        {% elif i != j %}
-                            <select style="background-color: rgb(229, 133, 116);">
-                            <option disabled selected hidden >{{i}}</option>
-                            
-                            </select>
-                        {% else %}
-
-                        {% endif %}
                     </div>
+                </li>
+                <li>
+                    <div class="certian_example"> 
+                     <p class="kontext">tú</p>
+                        <select name="sII">
+                            <option disabled selected hidden>...</option>
+                            {% for i in options %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>    
+
+                    </div>
+                </li>
+                <li>
+                    <div class="certian_example"> 
+                     <p class="kontext">él|ella</p>
+                        <select name="sIII">
+                            <option disabled selected hidden>...</option>
+                            {% for i in options %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>    
+
+                    </div>
+                </li>
+                <li>
+                    <div class="certian_example"> 
+                     <p class="kontext">nosotr-os|as</p>
+                        <select name="sIV">
+                            <option disabled selected hidden>...</option>
+                            {% for i in options %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>    
+
+                    </div>
+                </li>
+                <li>
+                    <div class="certian_example"> 
+                    <p class="kontext">vosotr-os|as</p>
+                        <select name="sV">
+                            <option disabled selected hidden>...</option>
+                            {% for i in options %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>    
+
+                    </div>
+                </li>
+                <li>
+                    <div class="certian_example"> 
+                    <p class="kontext">ell-os|as</p>
+                        <select name="sVI">
+                            <option disabled selected hidden>...</option>
+                            {% for i in options %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endfor %}
+                        </select>    
+
+                    </div>
+                </li>
 
                     
 
                     
-                    </li>
-                {% endfor %}
-                {% if time == "presente" %}
-                    <form action="{{url_for('presente_forward')}}" method="post">
-                {% elif time == "pretérito indefinido" %}
-                    <form action="{{url_for('indefinido_forward')}}" method="post">
-                {% endif %}
                     
-                    
-                    <div class="certain_example">
+            {% if konjugation == "presente" %}
+                <form action="{{url_for('presente_iregular_backward')}}" method="post">
+                        <div class="certain_example">
                             <button type="submit">Next verb</button>
                         </div>
                     </form>
-            
+            {% elif konjugation == "pretérito indefinido" %}
+                <form action="{{url_for('indefinido_iregular_backward')}}" method="post">
+                        <div class="certain_example">
+                            <button type="submit">Next verb</button>
+                        </div>
+                    </form>
+            {% endif %}
+
         </ul>
-    </div>
+        </form>
 </body>
 </html>

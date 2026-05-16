@@ -32,6 +32,7 @@
         }
         li{
             padding-left: 0px;
+            
         }
 
     </style>
@@ -45,7 +46,7 @@
                 <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
                         
                         {% if common_words_progress > 0 and not common_words_progress > 100 %}
-                            <div style="height: 3px; width: {{ common_words_progress }}%; background-color: #7effa7; border-radius: 5px;"></div>
+                            <div style="height: 3px; width: {{ common_words_progress }}%; background-color: #2dff6f; border-radius: 5px;"></div>
                         {% elif common_words_progress <= 0 and not common_words_progress < -100 %}
                             <div style="height: 3px; width: {{common_words_progress|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
                         {% else %}
@@ -56,7 +57,7 @@
             <li><a href="{{ url_for('words', set='confusing_similarities', back='False', word_id=0, easy='None',was_front='None',was_back='None') }}">Confusing similarities
                 <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
                         {% if confusing_similarities_progress > 0 and not confusing_similarities_progress > 100 %}
-                            <div style="height: 3px; width: {{ confusing_similarities_progress }}%; background-color: #7effa7; border-radius: 5px;"></div>
+                            <div style="height: 3px; width: {{ confusing_similarities_progress }}%; background-color: #2dff6f; border-radius: 5px;"></div>
                         {% elif confusing_similarities_progress <= 0 and not confusing_similarities_progress < -100 %}
                             <div style="height: 3px; width: {{confusing_similarities_progress|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
                         {% else %}
@@ -64,6 +65,63 @@
                         {% endif %}
                 </div>
             </a></li>
+            <li><a href="{{ url_for('words', set='less_common_words', back='False', word_id=0, easy='True',was_front='None',was_back='None') }}">
+                Less common words 
+                <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        
+                        {% if less_common_words_progress > 0 and not less_common_words_progress > 100 %}
+                            <div style="height: 3px; width: {{ less_common_words_progress }}%; background-color: #2dff6f; border-radius: 5px;"></div>
+                        {% elif less_common_words_progress <= 0 and not less_common_words_progress < -100 %}
+                            <div style="height: 3px; width: {{less_common_words_progress|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+            </a></li>
+            <li><a href="{{ url_for('words', set='easiest_words', back='False', word_id=0, easy='True',was_front='None',was_back='None') }}">
+                Easiest words 
+                <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        
+                        {% if easiest_words_progress > 0 and not easiest_words_progress > 100 %}
+                            <div style="height: 3px; width: {{ easiest_words_progress }}%; background-color: #2dff6f; border-radius: 5px;"></div>
+                        {% elif easiest_words_progress <= 0 and not easiest_words_progress < -100 %}
+                            <div style="height: 3px; width: {{easiest_words_progress|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+            </a></li>
+            <li><a href="{{ url_for('words', set='false_friends', back='False', word_id=0, easy='True',was_front='None',was_back='None') }}">
+                False friends 
+                <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        
+                        {% if false_friends_progress > 0 and not false_friends_progress > 100 %}
+                            <div style="height: 3px; width: {{ false_friends_progress }}%; background-color: #2dff6f; border-radius: 5px;"></div>
+                        {% elif false_friends_progress <= 0 and not false_friends_progress < -100 %}
+                            <div style="height: 3px; width: {{false_friends_progress|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+            </a></li>
+            <li><a href="{{ url_for('words', set='common_objects', back='False', word_id=0, easy='True',was_front='None',was_back='None') }}">
+                Common objects 
+                <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        
+                        {% if common_objects_progress > 0 and not common_objects_progress > 100 %}
+                            <div style="height: 3px; width: {{ common_objects_progress }}%; background-color: #2dff6f; border-radius: 5px;"></div>
+                        {% elif common_objects_progress <= 0 and not common_objects_progress < -100 %}
+                            <div style="height: 3px; width: {{common_objects_progress|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+            </a></li>
+
+
+
+
+
         </ul>
 </body>
 </html>

@@ -39,7 +39,7 @@
     <h1>Times menu</h1>
     <ul>
         <li><a href="{{ url_for('menu') }}">Back to menu</a></li>
-        <li><a href="{{ url_for('presente_forward') }}">El presente
+        <li><a href="{{ url_for('presente_forward') }}">(Presente) verbos regulares
             <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
                         {% if presente_prog > 0 and not presente_prog > 100 %}
                             <div style="height: 3px; width: {{presente_prog }}%; background-color: #7effa7; border-radius: 5px;"></div>
@@ -50,7 +50,7 @@
                         {% endif %}
                 </div>
         </a></li>
-        <li><a href="{{ url_for('presente_iregular_forward') }}">El presente backward
+        <li><a href="{{ url_for('presente_iregular_forward') }}">(Presente) verbos iregulares
             <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
                         {% if presente_iregular_prog > 0 and not presente_iregular_prog > 100 %}
                             <div style="height: 3px; width: {{presente_iregular_prog }}%; background-color: #7effa7; border-radius: 5px;"></div>
@@ -61,6 +61,33 @@
                         {% endif %}
                 </div>
         </a></li>
+        <!--
+        <li><a href="{{ url_for('indefinido_forward') }}">(Pretérito indefinido) verbos regulares
+            <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        {% if indefinido_prog > 0 and not indefinido_prog > 100 %}
+                            <div style="height: 3px; width: {{indefinido_prog }}%; background-color: #7effa7; border-radius: 5px;"></div>
+                        {% elif indefinido_prog <= 0 and not indefinido_prog < -100 %}
+                            <div style="height: 3px; width: {{indefinido_prog|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+        </a></li>
+        
+        
+        <li><a href="{{ url_for('indefinido_iregular_forward') }}">(Pretérito indefinido) verbos iregulares
+            <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        {% if indefinido_iregular_prog > 0 and not indefinido_iregular_prog > 100 %}
+                            <div style="height: 3px; width: {{indefinido_iregular_prog }}%; background-color: #7effa7; border-radius: 5px;"></div>
+                        {% elif indefinido_iregular_prog <= 0 and not indefinido_iregular_prog < -100 %}
+                            <div style="height: 3px; width: {{indefinido_iregular_prog|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+        </a></li>
+        -->
+
     </ul>
 </body>
 </html>

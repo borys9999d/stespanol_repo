@@ -77,7 +77,7 @@
         option{
             padding: 3px 80px 3px 0px;
             border:0px;
-            background-color: #c0c0c0;
+            
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -139,78 +139,59 @@
         <a class="back" href="{{ url_for('times') }}">Back</a>
     </div>
     <div class="displayer">
-        <h1>El presente</h1>
+        <h1>Verbos iregulares ({{konjugation}})</h1>
         <h4>Verb: {{verb}}</h4>
-        <form method="post" action="{{ url_for('presente_iregular_backward') }}">
+        {% if konjugation == "pretérito indefinido" %}
+            <form method="post" action="{{ url_for('indefinido_iregular_forward') }}">
+        {% elif konjugation == "presente" %}
+            <form method="post" action="{{ url_for('presente_iregular_forward') }}">
+        {% endif %}
+        
+
         <ul>
             
-            <li>
-                <div class="certian_example"> 
-                <p class="kontext">yo</p> <p class="text">{{const}}</p>
                 
-                <select name="sI">
-                    <option disabled selected hidden>...</option>
-                    {% for i in endingsI %}
-                        <option value="{{i}}">{{i}}</option>
-                    {% endfor %}
-                </select>
-            </div></li>
+                {% for i, j,k in zip(chosen_ends,right_ends,kontexts) %}
+                    <li>
+                    <div class="certian_example"> 
+                    <p class="kontext">{{k}}</p> <p class="text">{{const}}</p>
+                        {% if i== j %}
+                            <select style="background-color:rgb(145, 232, 137);">
+                            <option disabled selected hidden >{{i}}</option>
+                            
+                            </select>
 
-            <li><div class="certian_example"> 
-                <p class="kontext">tú</p> <p class="text">{{const}}</p>
-                <select name="sII">
-                    <option disabled selected hidden>...</option>
-                    {% for i in endingsI %}
-                        <option value="{{i}}">{{i}}</option>
-                    {% endfor %}
-                </select>
-                </div></li>
+                        {% elif i != j %}
+                            <select style="background-color: rgb(229, 133, 116);">
+                            <option disabled selected hidden >{{i}}</option>
+                            
+                            </select>
+                        {% else %}
 
-            <li><div class="certian_example"> 
-                <p class="kontext">él|ella</p> <p class="text">{{const}}</p>
-                <select name="sIII">
-                    <option disabled selected hidden>...</option>
-                    {% for i in endingsI %}
-                        <option value="{{i}}">{{i}}</option>
-                    {% endfor %}
-                </select>
-                </div></li>
+                        {% endif %}
+                    </div>
 
-            <li><div class="certian_example"> 
-                <p class="kontext">nosotr-os|as</p> <p class="text">{{const}}</p>
-                <select name="sIV">
-                    <option disabled selected hidden>...</option>
-                    {% for i in endingsI %}
-                        <option value="{{i}}">{{i}}</option>
-                    {% endfor %}
-                </select>
-                </div></li>
+                    
 
-            <li><div class="certian_example"> 
-                <p class="kontext">vostr-os|as</p> <p class="text">{{const}}</p>
-                <select name="sV">
-                    <option disabled selected hidden>...</option>
-                    {% for i in endingsI %}
-                        <option value="{{i}}">{{i}}</option>
-                    {% endfor %}
-                </select>
-                </div></li>
+                    
+                    </li>
+                {% endfor %}
+                {% if konjugation == "presente" %}
+                    <form action="{{url_for('presente_iregular_forward')}}" method="post">
+                            <div class="certain_example">
+                                <button type="submit">Next verb</button>
+                            </div>
+                        </form>
+                {% elif konjugation == "pretérito indefinido" %}
+                    <form action="{{url_for('indefinido_iregular_forward')}}" method="post">
+                            <div class="certain_example">
+                                <button type="submit">Next verb</button>
+                            </div>
+                        </form>
+                {% endif %}
 
-            <li><div class="certian_example"> 
-                <p class="kontext">ell-os|as</p> <p class="text">{{const}}</p>
-                <select name="sVI">
-                    <option disabled selected hidden>...</option>
-                    {% for i in endingsI %}
-                        <option value="{{i}}">{{i}}</option>
-                    {% endfor %}
-                </select>
-                </div></li>
-
-                <div class="certain_example">
-                    <button type="submit">Check</button>
-                </div>
 
         </ul>
-        </form>
+    </div>
 </body>
 </html>

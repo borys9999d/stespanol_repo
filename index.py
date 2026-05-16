@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response
-import random, math
+import random, math, os
 
 app = Flask(__name__)
 asked = []
 selected_set = []
+
+
 
 common_words = [
     {"ser": "to be (essential|permanent quality)"},#0
@@ -59,7 +61,8 @@ presente = [
     ["abrir", "abr"],
     ["compartir", "compart"]
 ]
-presente_iregulares=[
+
+presente_iregulares = [
     ["ser","soy","eres","es","somos","sois","son"],
     ["estar","estoy","estás","está","estamos","estáis","están"],
     ["tener","tengo","tienes","tiene","tenemos","tenéis","tienen"],
@@ -68,16 +71,19 @@ presente_iregulares=[
     ["decir","digo","dices","dice","decimos","decís","dicen"],
     ["poder","puedo","puedes","puede","podemos","podéis","pueden"],
     ["ver","veo","ves","ve","vemos","veis","ven"],
-    ["dar", "doy", "das", "da", "damos", "dais", "dan"]
+    ["dar","doy","das","da","damos","dais","dan"]
 ]
 
+
 kontexts = ["yo","tú", "él|ella", "nosotr-os|as","vosotr-os|as","ell-os|as"]
+
 
 presente_end_ar = ["o","as","a","amos","áis","an"]
 presente_end_erir = ["o","es","e","imos","ís","en"]
 
 indefinido_end_ar = ["é","aste","ó","amos","asteis","aron"]
 indefinido_end_erir = ["í","iste","ió","imos","isteis","ieron"]
+
 
 @app.route('/')
 def menu():
@@ -93,6 +99,7 @@ def vocabs():
 
     resp = make_response(render_template('Vocabs_menu.html', common_words_progress=valI, confusing_similarities_progress=valII))
 
+    # Overwrite (replace) the cookie by setting it again with the same name
     try:
         if int(request.cookies.get('common_words_progress')) > 100:
             valI = 99
@@ -102,6 +109,7 @@ def vocabs():
             valII = 99
         elif int(request.cookies.get('confusing_similarities_progress')) < -100:
             valII = -99
+
 
         else:pass
     except:
@@ -120,34 +128,27 @@ def times():
     
     try:
         valI = int(request.cookies.get('presente_prog'))
-        valII = int(request.cookies.get('presente_iregular_prog'))
         
     except:
         valI = 0
-        valII = 0
         
-    resp = make_response(render_template('Times_menu.html', presente_prog=valI, presente_iregular_prog=valII))
 
+    resp = make_response(render_template('Times_menu.html', presente_prog=valI))
+
+    # Overwrite (replace) the cookie by setting it again with the same name
     try:
         if int(request.cookies.get('presente_prog')) > 100:
             valI = 99
         elif int(request.cookies.get('presente_prog')) < -100:
             valI = -99
 
-        if int(request.cookies.get('presente_iregular_prog')) > 100:
-            valII = 99
-        elif int(request.cookies.get('presente_iregular_prog')) < -100:
-            valII = -99
-
         else:pass
-    except:
-        valI= 0
-        valII = 0
+    except:valI= 0
 
     resp = make_response(render_template('Times_menu.html', presente_prog=valI\
-        ,presente_iregular_prog=valII))
+        ))
     resp.set_cookie('presente_prog', str(valI), max_age=60*60*24*365)
-    resp.set_cookie('presente_iregular_prog', str(valII), max_age=60*60*24*365)
+   
 
     return resp
 
@@ -178,6 +179,7 @@ def words(set, back, word_id, easy, was_front, was_back):
                 progress_in_common_words = str(int(t)-1)
                 t = request.cookies.get('confusing_similarities_progress')
                 progress_in_confusing_similarities = str(int(t)-1)
+
 
             except:pass
 
@@ -236,17 +238,19 @@ def presente_forward():
     resp = make_response(render_template('el_presente_forward.html'))
 
     random_endingsI = []
+    
     random_num = random.randint(0, len(presente) - 1)
     verb = presente[random_num][0]
     const = presente[random_num][1]
     
+
     if verb.endswith("ar"):
         random_endingsI = presente_end_ar
         random_choiceI = random.randint(0,5)
         wordI = random_endingsI[random_choiceI]
         random_endingsI.pop(random_choiceI)
         random_endingsI.append(wordI)
-   
+        
     else:
         random_endingsI = presente_end_erir
         random_choiceI = random.randint(0,5)
@@ -254,9 +258,10 @@ def presente_forward():
         random_endingsI.pop(random_choiceI)
         random_endingsI.append(wordI)
 
+    
     resp = make_response(render_template('el_presente_forward.html',verb=verb,const=const,endingsI=random_endingsI))
-    resp.set_cookie('verb', verb, max_age=60*60)
-    resp.set_cookie('const', const, max_age=60*60)
+    resp.set_cookie('verb', verb, max_age=60*5)
+    resp.set_cookie('const', const, max_age=60*5)
     return resp
 
 @app.route('/presente_backward', methods=['POST'])
@@ -280,7 +285,7 @@ def presente_backward():
     chosen_ends.append(sVI)
 
     res = 0
-
+    # determine correct endings from the verb stored in cookies
     verb = request.cookies.get('verb')
     const = request.cookies.get('const')
     try:
@@ -288,12 +293,13 @@ def presente_backward():
     except:
         presente_prog = 0
 
+
     if verb and verb.endswith("ar"):
         right_ends = ["o","as","a","amos","áis","an"]
     else:
         right_ends = ["o","es","e","imos","ís","en"]
 
-
+    
     for i, j in zip(chosen_ends,right_ends):
         if i == j:
             res += 1
@@ -302,9 +308,13 @@ def presente_backward():
     resp= make_response(render_template('el_presente_backside.html', verb=verb, const=const,
                            chosen_ends=chosen_ends, right_ends=right_ends,
                            kontexts=kontexts, zip=zip))
+    
+
+    
     resp.set_cookie('presente_prog', str(res+presente_prog), max_age=60*60*24*365)
 
     return resp
+
 @app.route('/presente_iregular_forward',methods=['POST','GET'])
 def presente_iregular_forward():
     resp = make_response(render_template('presente_iregular_forward.html'))
@@ -365,14 +375,7 @@ def presente_iregular_backward():
                            chosen_ends=chosen_ends, right_ends=right_ends, zip=zip))
     resp.set_cookie('presente_iregular_prog', str(res+presente_iregular_prog), max_age=60*60*24*365)
 
-    return resp
-
 
 if __name__ == "__main__":
-    # 1. Get the port from the environment variable (Render sets this automatically)
-    # 2. Default to 10000 if PORT isn't found (local testing)
     
-    
-    # host='0.0.0.0' tells Flask to listen on all public IPs
-    app.run(debug=True)
-   
+    app.run()

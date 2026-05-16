@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            justify-content: center;
+            justify-items: center;
+        }
+        a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+        ul{
+            list-style: none;
+            padding-left: 0px;
+            
+        }
+        li{
+            padding-left: 0px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Numbers menu</h1>
+        <ul>
+            <li><a href="{{ url_for('menu') }}">Back to menu</a></li>
+            <li><a href="{{ url_for('words', set='basic_numbers', back='False', word_id=0, easy='True',was_front='None',was_back='None') }}">
+                Basic numbers (0 - 10)
+                <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        {% if basic_nums_progress > 0 and not basic_nums_progress > 100 %}
+                            <div style="height: 3px; width: {{basic_nums_progress }}%; background-color: #7effa7; border-radius: 5px;"></div>
+                        {% elif basic_nums_progress <= 0 and not basic_nums_progress < -100 %}
+                            <div style="height: 3px; width: {{basic_nums_progress|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+            </a></li>
+            <li><a href="{{ url_for('words', set='further_numbers', back='False', word_id=0, easy='True',was_front='None',was_back='None') }}">
+                Further numbers (11 - 29)
+                <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        {% if further_nums_progress > 0 and not further_nums_progress > 100 %}
+                            <div style="height: 3px; width: {{further_nums_progress }}%; background-color: #7effa7; border-radius: 5px;"></div>
+                        {% elif further_nums_progress <= 0 and not further_nums_progress < -100 %}
+                            <div style="height: 3px; width: {{further_nums_progress|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+            </a></li>
+            <li><a href="{{ url_for('words', set='large_numbers', back='False', word_id=0, easy='True',was_front='None',was_back='None') }}">
+                Large numbers (30 - 100)
+                <div style="height: 3px;width: 100%;background-color: #dbdbdb;border-radius: 5px;" >
+                        {% if large_nums_progress > 0 and not large_nums_progress > 100 %}
+                            <div style="height: 3px; width: {{large_nums_progress }}%; background-color: #7effa7; border-radius: 5px;"></div>
+                        {% elif large_nums_progress <= 0 and not large_nums_progress < -100 %}
+                            <div style="height: 3px; width: {{large_nums_progress|abs}}%; background-color: #ff7bab; border-radius: 5px;"></div>
+                        {% else %}
+                        
+                        {% endif %}
+                </div>
+            </a></li>
+            
+            
+        </ul>
+</body>
+</html>

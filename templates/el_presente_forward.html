@@ -139,9 +139,15 @@
         <a class="back" href="{{ url_for('times') }}">Back</a>
     </div>
     <div class="displayer">
-        <h1>El presente</h1>
+        <h1>Verbos regulares ({{time}})</h1>
         <h4>Verb: {{verb}}</h4>
-        <form method="post" action="{{ url_for('presente_backward') }}">
+        
+        {% if time == "presente" %}
+            <form method="post" action="{{ url_for('presente_backward') }}">
+        {% elif time == "pretérito indefinido" %}
+            <form method="post" action="{{ url_for('indefinido_backward') }}">
+        {% endif %}
+    
         <ul>
             
             <li>
